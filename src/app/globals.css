@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark pink-purple light mode (still has pink-purple tones) */
+    --background: 300 20% 97%;
+    --foreground: 285 50% 8%;
+    --card: 300 15% 99%;
+    --card-foreground: 285 50% 8%;
+    --popover: 300 15% 99%;
+    --popover-foreground: 285 50% 8%;
+    --primary: 315 70% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 280 30% 92%;
+    --secondary-foreground: 285 50% 15%;
+    --muted: 290 20% 93%;
+    --muted-foreground: 285 20% 45%;
+    --accent: 280 35% 88%;
+    --accent-foreground: 285 50% 15%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 285 25% 87%;
+    --input: 285 25% 87%;
+    --ring: 315 70% 45%;
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background: 270 25% 7%;
+    --foreground: 300 20% 95%;
+    --card: 270 22% 10%;
+    --card-foreground: 300 20% 95%;
+    --popover: 270 22% 10%;
+    --popover-foreground: 300 20% 95%;
+    --primary: 320 75% 60%;
+    --primary-foreground: 270 25% 7%;
+    --secondary: 270 20% 16%;
+    --secondary-foreground: 300 20% 90%;
+    --muted: 270 18% 14%;
+    --muted-foreground: 290 15% 58%;
+    --accent: 280 25% 20%;
+    --accent-foreground: 300 20% 90%;
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 270 20% 18%;
+    --input: 270 20% 18%;
+    --ring: 320 75% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.7);
+}
