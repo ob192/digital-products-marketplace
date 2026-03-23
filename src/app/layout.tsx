@@ -22,8 +22,17 @@ export const metadata: Metadata = {
     template: "%s | DigitalHub",
   },
   description:
-    "Your trusted marketplace for premium digital goods. Streaming accounts, game keys, software licenses, and more. Instant delivery, competitive prices.",
-  keywords: ["digital goods", "streaming accounts", "game keys", "software licenses", "gift cards"],
+      "Your trusted marketplace for premium digital goods. Facebook accounts, BM, farm accounts, and more. Instant delivery, competitive prices.",
+  keywords: [
+    "digital goods",
+    "facebook accounts",
+    "business manager",
+    "farm accounts",
+    "autoreg",
+    "fan page",
+    "pixel",
+    "agent accounts",
+  ],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   openGraph: {
     type: "website",
@@ -35,20 +44,46 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "DigitalHub",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    description:
+        "Your trusted marketplace for premium digital goods. Instant delivery, competitive prices.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      url: "https://t.me/bububu",
+      availableLanguage: ["English", "Russian"],
+    },
+  }
+
   return (
-    <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
-        className={`${dmSans.variable} ${dmSerif.variable} font-sans antialiased min-h-screen flex flex-col`}
+          className={`${dmSans.variable} ${dmSerif.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        <I18nProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </I18nProvider>
+      <I18nProvider>
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </I18nProvider>
       </body>
-    </html>
+      </html>
   )
 }

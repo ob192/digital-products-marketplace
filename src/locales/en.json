@@ -6,13 +6,14 @@
     "contact": "Contact",
     "signIn": "Sign In",
     "signOut": "Sign Out",
-    "balance": "Balance"
+    "balance": "Balance",
+    "topUp": "Top Up"
   },
   "hero": {
     "badge": "Instant Digital Delivery",
     "title": "Premium Digital Goods,",
     "titleAccent": "Delivered Instantly",
-    "subtitle": "Shop streaming accounts, game keys, software licenses, and gift cards at competitive prices. Trusted by thousands of customers worldwide.",
+    "subtitle": "Shop premium accounts, BM, farm, autoreg, and more at competitive prices. Trusted by thousands of customers worldwide.",
     "cta": "Browse All Products",
     "ctaSecondary": "Contact Support"
   },
@@ -45,7 +46,7 @@
     "minOrder": "Min.",
     "perUnit": "/ unit",
     "view": "View",
-    "contactToPurchase": "Contact to Purchase",
+    "contactToPurchase": "Buy via Telegram",
     "getSupport": "Get Support",
     "relatedProducts": "Related Products",
     "viewCategory": "View Category",
@@ -66,28 +67,44 @@
   "auth": {
     "welcomeBack": "Welcome back",
     "createAccount": "Create account",
+    "resetPassword": "Reset password",
     "signInDesc": "Sign in to your DigitalHub account.",
-    "signUpDesc": "Sign up to get started.",
-    "continueWithGoogle": "Continue with Google",
+    "signUpDesc": "Sign up with email and password.",
+    "resetDesc": "Enter your email and we'll send you a reset link.",
     "email": "Email",
     "emailPlaceholder": "you@example.com",
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "signIn": "Sign In",
     "createAccountBtn": "Create Account",
+    "sendResetLink": "Send Reset Link",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
     "signUpLink": "Sign up",
     "signInLink": "Sign in",
+    "forgotPassword": "Forgot password?",
+    "backToSignIn": "Back to sign in",
     "checkEmail": "Check your email for a confirmation link!",
+    "resetEmailSent": "Password reset link sent! Check your email.",
     "error": "An error occurred"
+  },
+  "topup": {
+    "title": "Top Up Balance",
+    "subtitle": "Choose a payment method, send crypto to the address below, and then write to our Telegram support to confirm.",
+    "step1": "Step 1 — Choose payment method",
+    "step2": "Step 2 — Send payment",
+    "step3": "Step 3 — Confirm via Telegram",
+    "networkWarning": "Send only {currency} to this address. Wrong network = lost funds.",
+    "contactTitle": "After payment, write to us",
+    "contactDesc": "Send your Transaction ID or screenshot to our Telegram support. We'll credit your balance within 30 minutes.",
+    "openTelegram": "Write to Telegram"
   },
   "about": {
     "title": "About DigitalHub",
-    "subtitle": "DigitalHub is your trusted marketplace for premium digital goods. We offer streaming accounts, game keys, software licenses, gift cards, and more — all at competitive prices with instant delivery.",
+    "subtitle": "DigitalHub is your trusted marketplace for premium digital goods. We offer Facebook accounts, BM, farm accounts, autoreg, and more — all at competitive prices with instant delivery.",
     "mission": "Our Mission",
-    "missionP1": "We believe everyone deserves access to quality digital services and entertainment without overpaying. Our platform connects buyers with the best digital goods at fair prices, backed by reliable support.",
-    "missionP2": "Since our founding, we've served thousands of satisfied customers across the globe. Whether you need a Netflix subscription, a Steam game key, or a Microsoft Office license, we have you covered.",
+    "missionP1": "We believe everyone deserves access to quality digital services without overpaying. Our platform connects buyers with the best digital goods at fair prices, backed by reliable support.",
+    "missionP2": "Since our founding, we've served thousands of satisfied customers across the globe.",
     "values": "Our Values",
     "trust": "Trust & Security",
     "trustDesc": "Every product is verified before listing. Your security is our top priority.",
@@ -106,7 +123,7 @@
     "title": "Get in Touch",
     "subtitle": "Have questions about a product, need help with an order, or want to discuss a bulk purchase? Our support team is available 24/7 via Telegram.",
     "telegramTitle": "Telegram Support",
-    "telegramDesc": "Join our Telegram support channel for the fastest response. Click the button below to open a conversation.",
+    "telegramDesc": "Contact us for the fastest response. Click the button below to open a conversation.",
     "openTelegram": "Open Telegram Support",
     "available": "24/7 Available",
     "availableDesc": "Our team is always ready to help, any time of day.",
@@ -116,7 +133,7 @@
     "privateDesc": "Your conversations are private and secure."
   },
   "footer": {
-    "desc": "Your trusted marketplace for premium digital goods. Streaming accounts, game keys, software licenses, and more — delivered instantly.",
+    "desc": "Your trusted marketplace for premium digital goods. Accounts, BM, farm, autoreg, and more — delivered instantly.",
     "navigation": "Navigation",
     "support": "Support",
     "telegramSupport": "Telegram Support",
@@ -134,8 +151,8 @@
     "contactTitle": "Contact Support",
     "contactDesc": "Get in touch with our support team via Telegram. We're available 24/7 to help with your orders and questions.",
     "productsTitle": "All Products",
-    "productsDesc": "Browse our full catalog of premium digital goods including streaming accounts, game keys, software licenses, and more.",
+    "productsDesc": "Browse our full catalog of premium digital goods.",
     "siteTitle": "DigitalHub — Premium Digital Goods Marketplace",
-    "siteDesc": "Your trusted marketplace for premium digital goods. Streaming accounts, game keys, software licenses, and more. Instant delivery, competitive prices."
+    "siteDesc": "Your trusted marketplace for premium digital goods. Instant delivery, competitive prices."
   }
 }

@@ -16,7 +16,7 @@ model User {
   balance    Decimal  @default(0) @db.Decimal(10, 2)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
+  topUpRequests TopUpRequest[]
   @@index([supabaseId])
 }
 
@@ -51,4 +51,26 @@ model Product {
 
   @@index([categoryId])
   @@index([slug])
+}
+
+
+model TopUpRequest {
+  id          String            @id @default(cuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Decimal           @db.Decimal(10, 2)
+  currency    String            // BTC, ETH, USDT, etc.
+  txId        String?           // transaction ID (optional if screenshot provided)
+  screenshotUrl String?         // uploaded screenshot URL (optional)
+  status      TopUpStatus       @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([userId])
+}
+
+enum TopUpStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
 }
