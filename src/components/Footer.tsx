@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ShoppingBag, Send } from "lucide-react"
 import { useI18n } from "@/lib/i18n"
 
-const TELEGRAM_URL = "https://t.me/bububu"
+const TELEGRAM_URL = "https://t.me/TTFarmFBfarm"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()

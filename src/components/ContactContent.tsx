@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useI18n } from "@/lib/i18n"
 
-const TELEGRAM_URL = "https://t.me/bububu"
+const TELEGRAM_URL = "https://t.me/TTFarmFBfarm"
 
 export function ContactContent() {
   const { t } = useI18n()

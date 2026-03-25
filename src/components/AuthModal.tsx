@@ -49,7 +49,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     try {
       if (mode === "reset") {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/auth/callback?next=/`,
+          redirectTo: `${window.location.origin}/auth/update-password`,
         })
         if (error) throw error
         setSuccess(t("auth.resetEmailSent"))
@@ -57,7 +57,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+          options: { emailRedirectTo: `${window.location.origin}` },
         })
         if (error) throw error
         setSuccess(t("auth.checkEmail"))

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { CategoryCard } from "@/components/CategoryCard"
 import { useI18n } from "@/lib/i18n"
 
-const TELEGRAM_SUPPORT = "https://t.me/bububu"
+const TELEGRAM_SUPPORT = "https://t.me/TTFarmFBfarm"
 
 export function HomeContent({
                               categories,

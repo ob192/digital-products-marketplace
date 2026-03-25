@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { formatPrice } from "@/lib/utils"
 import { useI18n } from "@/lib/i18n"
 
-const TELEGRAM_SUPPORT = "https://t.me/bububu"
+const TELEGRAM_SUPPORT = "https://t.me/TTFarmFBfarm"
 
 interface Product {
   title: string

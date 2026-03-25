@@ -6,32 +6,40 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useI18n } from "@/lib/i18n"
 
-const TELEGRAM_SUPPORT = "https://t.me/bububu"
+const TELEGRAM_SUPPORT = "https://t.me/TTFarmFBfarm"
 
 const PAYMENT_METHODS = [
     {
         currency: "USDT (TRC20)",
         code: "USDT_TRC20",
-        address: "TYourTRC20AddressHere",
+        address: process.env.NEXT_PUBLIC_WALLET_USDT_TRC20 || "TLJpRZ8peKemCcPKH7FK6M6RkCmjxw3QYn",
         network: "Tron (TRC20)",
         icon: "💵",
         color: "bg-green-500/10 border-green-500/30 text-green-600 dark:text-green-400",
     },
     {
+        currency: "USDT (ERC20)",
+        code: "USDT_ERC20",
+        address: process.env.NEXT_PUBLIC_WALLET_USDT_ERC20 || "0x9DDaeF802371d0c8276eda0F7528033bab4cF22a",
+        network: "Ethereum (ERC20)",
+        icon: "💵",
+        color: "bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400",
+    },
+    {
         currency: "USDT (BEP20)",
         code: "USDT_BEP20",
-        address: "0xYourBEP20AddressHere",
+        address: process.env.NEXT_PUBLIC_WALLET_USDT_BEP20 || "0x9DDaeF802371d0c8276eda0F7528033bab4cF22a",
         network: "BNB Smart Chain (BEP20)",
         icon: "💵",
         color: "bg-yellow-500/10 border-yellow-500/30 text-yellow-600 dark:text-yellow-400",
     },
     {
-        currency: "Binance ID",
-        code: "BINANCE_ID",
-        address: "123456789",
-        network: "Binance Pay",
-        icon: "🔶",
-        color: "bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400",
+        currency: "USDT (Polygon)",
+        code: "USDT_POLYGON",
+        address: process.env.NEXT_PUBLIC_WALLET_USDT_POLYGON || "0x9DDaeF802371d0c8276eda0F7528033bab4cF22a",
+        network: "Polygon",
+        icon: "🟣",
+        color: "bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400",
     },
 ]
 

@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ShoppingBag, Menu, X, User, LogOut, Wallet, CreditCard } from "lucide-react"
+import { ShoppingBag, Menu, X, User, LogOut, Wallet } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AuthModal } from "@/components/AuthModal"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
@@ -20,26 +20,11 @@ export function Navbar() {
   const supabase = createClient()
   const router = useRouter()
   const { t } = useI18n()
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user)
-      if (data.user) fetchBalance()
-    })
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-      if (session?.user) {
-        fetchBalance()
-      } else {
-        setBalance(null)
-      }
-    })
-    return () => subscription.unsubscribe()
-  }, [])
+  const fetchingRef = useRef(false)
 
   const fetchBalance = async () => {
+    if (fetchingRef.current) return
+    fetchingRef.current = true
     try {
       const res = await fetch("/api/auth/sync", { method: "POST" })
       if (res.ok) {
@@ -48,8 +33,34 @@ export function Navbar() {
       }
     } catch {
       // silent
+    } finally {
+      fetchingRef.current = false
     }
   }
+
+  useEffect(() => {
+    // Get initial session — this is the source of truth on mount
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+      if (data.user) fetchBalance()
+    })
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null)
+
+      if (session?.user && (event === "SIGNED_IN" || event === "TOKEN_REFRESHED")) {
+        fetchBalance()
+      }
+
+      if (!session?.user) {
+        setBalance(null)
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()

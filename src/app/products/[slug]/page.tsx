@@ -56,7 +56,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       availability: product.availability
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
-      url: "https://t.me/bububu",
+      url: "https://t.me/TTFarmFBfarm",
     },
     category: product.category.name,
     brand: {

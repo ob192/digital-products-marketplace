@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { DM_Sans, DM_Serif_Display } from "next/font/google"
 import "./globals.css"
 import { Navbar } from "@/components/Navbar"
@@ -15,6 +15,12 @@ const dmSerif = DM_Serif_Display({
   weight: "400",
   variable: "--font-display",
 })
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+}
 
 export const metadata: Metadata = {
   title: {
@@ -44,11 +50,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -62,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
-      url: "https://t.me/bububu",
+      url: "https://t.me/TTFarmFBfarm",
       availableLanguage: ["English", "Russian"],
     },
   }
