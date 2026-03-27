@@ -1,70 +1,25 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ShoppingBag, Menu, X, User, LogOut, Wallet } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AuthModal } from "@/components/AuthModal"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
-import { createClient } from "@/lib/supabase"
+import { useAuth } from "@/lib/auth-context"
 import { useI18n } from "@/lib/i18n"
 import { formatPrice } from "@/lib/utils"
-import type { User as SupabaseUser } from "@supabase/supabase-js"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [user, setUser] = useState<SupabaseUser | null>(null)
-  const [balance, setBalance] = useState<number | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
-  const supabase = createClient()
+  const { user, balance, signOut } = useAuth()
   const router = useRouter()
   const { t } = useI18n()
-  const fetchingRef = useRef(false)
-
-  const fetchBalance = async () => {
-    if (fetchingRef.current) return
-    fetchingRef.current = true
-    try {
-      const res = await fetch("/api/auth/sync", { method: "POST" })
-      if (res.ok) {
-        const data = await res.json()
-        setBalance(parseFloat(data.balance ?? "0"))
-      }
-    } catch {
-      // silent
-    } finally {
-      fetchingRef.current = false
-    }
-  }
-
-  useEffect(() => {
-    // Get initial session — this is the source of truth on mount
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user)
-      if (data.user) fetchBalance()
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null)
-
-      if (session?.user && (event === "SIGNED_IN" || event === "TOKEN_REFRESHED")) {
-        fetchBalance()
-      }
-
-      if (!session?.user) {
-        setBalance(null)
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    setBalance(null)
+    await signOut()
     setIsOpen(false)
     router.refresh()
   }
@@ -108,15 +63,27 @@ export function Navbar() {
               {user ? (
                   <div className="flex items-center gap-2">
                     {balance !== null && (
-                        <div className="flex items-center gap-1.5 text-sm bg-primary/10 text-primary rounded-full px-3 py-1 font-medium">
+                        <Link
+                            href="/account"
+                            className="flex items-center gap-1.5 text-sm bg-primary/10 text-primary rounded-full px-3 py-1 font-medium hover:bg-primary/20 transition-colors"
+                        >
                           <Wallet className="h-3.5 w-3.5" />
                           <span>{formatPrice(balance)}</span>
-                        </div>
+                        </Link>
                     )}
-                    <span className="text-sm text-muted-foreground truncate max-w-[140px]">
-                  {user.email}
-                </span>
-                    <Button variant="ghost" size="sm" onClick={handleSignOut} title={t("nav.signOut")}>
+                    <Link
+                        href="/account"
+                        className="flex items-center gap-1.5 text-sm font-medium border border-border rounded-md px-3 py-1.5 hover:bg-accent hover:border-primary/40 transition-colors"
+                    >
+                      <User className="h-4 w-4 text-primary" />
+                      <span className="truncate max-w-[110px]">{user.email}</span>
+                    </Link>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleSignOut}
+                        title={t("nav.signOut")}
+                    >
                       <LogOut className="h-4 w-4" />
                     </Button>
                   </div>
@@ -126,17 +93,21 @@ export function Navbar() {
                     {t("nav.signIn")}
                   </Button>
               )}
+
             </div>
 
             {/* Mobile right side */}
             <div className="flex md:hidden items-center gap-1.5">
-              {user && balance !== null && (
-                  <div className="flex items-center gap-1 text-xs bg-primary/10 text-primary rounded-full px-2 py-1 font-medium">
-                    <Wallet className="h-3 w-3" />
-                    <span>{formatPrice(balance)}</span>
-                  </div>
-              )}
-              {!user && (
+              {user ? (
+                  <Link
+                      href="/account"
+                      className="flex items-center gap-1 text-xs bg-primary/10 text-primary rounded-full px-2.5 py-1.5 font-medium hover:bg-primary/20 transition-colors"
+                      onClick={() => setIsOpen(false)}
+                  >
+                    <User className="h-3.5 w-3.5" />
+                    {balance !== null && <span>{formatPrice(balance)}</span>}
+                  </Link>
+              ) : (
                   <Button
                       size="sm"
                       variant="ghost"
@@ -146,6 +117,7 @@ export function Navbar() {
                     <User className="h-4 w-4" />
                   </Button>
               )}
+
               <button
                   className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent"
                   onClick={() => setIsOpen(!isOpen)}
@@ -182,10 +154,21 @@ export function Navbar() {
                     <LanguageSwitcher />
                     {user ? (
                         <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground truncate max-w-[120px]">
-                      {user.email}
-                    </span>
-                          <Button variant="ghost" size="sm" className="h-8" onClick={handleSignOut}>
+                          <Link
+                              href="/account"
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center gap-2 text-sm font-medium border border-border rounded-md px-3 py-1.5 hover:bg-accent transition-colors flex-1 min-w-0"
+                          >
+                            <User className="h-4 w-4 text-primary shrink-0" />
+                            <span className="truncate text-foreground">{user.email}</span>
+                          </Link>
+                          <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-9 px-2 shrink-0"
+                              onClick={handleSignOut}
+                              title={t("nav.signOut")}
+                          >
                             <LogOut className="h-4 w-4" />
                           </Button>
                         </div>

@@ -10,13 +10,15 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  email      String   @unique
-  supabaseId String   @unique
-  balance    Decimal  @default(0) @db.Decimal(10, 2)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String         @id @default(cuid())
+  email         String         @unique
+  supabaseId    String         @unique
+  balance       Decimal        @default(0) @db.Decimal(10, 2)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   topUpRequests TopUpRequest[]
+  purchases     Purchase[]
+
   @@index([supabaseId])
 }
 
@@ -35,36 +37,36 @@ model Category {
 }
 
 model Product {
-  id           String   @id @default(cuid())
-  slug         String   @unique
+  id           String     @id @default(cuid())
+  slug         String     @unique
   title        String
-  description  String   @db.Text
+  description  String     @db.Text
   image        String
   minOrder     Int
-  price        Decimal  @db.Decimal(10, 2)
-  availability Boolean  @default(true)
+  price        Decimal    @db.Decimal(10, 2)
+  availability Boolean    @default(true)
   tags         String[]
   categoryId   String
-  category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  category     Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  purchases    Purchase[] // ← add this line
 
   @@index([categoryId])
   @@index([slug])
 }
 
-
 model TopUpRequest {
-  id          String            @id @default(cuid())
-  userId      String
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  amount      Decimal           @db.Decimal(10, 2)
-  currency    String            // BTC, ETH, USDT, etc.
-  txId        String?           // transaction ID (optional if screenshot provided)
-  screenshotUrl String?         // uploaded screenshot URL (optional)
-  status      TopUpStatus       @default(PENDING)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount        Decimal     @db.Decimal(10, 2)
+  currency      String // BTC, ETH, USDT, etc.
+  txId          String? // transaction ID (optional if screenshot provided)
+  screenshotUrl String? // uploaded screenshot URL (optional)
+  status        TopUpStatus @default(PENDING)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@index([userId])
 }
@@ -73,4 +75,18 @@ enum TopUpStatus {
   PENDING
   CONFIRMED
   REJECTED
+}
+
+model Purchase {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  quantity  Int      @default(1)
+  price     Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([productId])
 }

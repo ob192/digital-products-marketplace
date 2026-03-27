@@ -96,7 +96,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             }
           }}
       >
-        <DialogContent className="sm:max-w-sm mx-4">
+        <DialogContent className="sm:max-w-sm">
           <DialogHeader>
             <DialogTitle>{getTitle()}</DialogTitle>
             <DialogDescription>{getDescription()}</DialogDescription>

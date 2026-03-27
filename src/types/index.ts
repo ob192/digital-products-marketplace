@@ -48,3 +48,23 @@ export interface ProductFilters {
   pageSize?: number
   availability?: boolean
 }
+
+export type OrderStatus = 'PENDING' | 'COMPLETED' | 'CANCELLED'
+
+export interface Order {
+  id: string
+  userId: string
+  productId: string
+  product: {
+    id: string
+    title: string
+    slug: string
+    image: string
+    category: { name: string; slug: string }
+  }
+  quantity: number
+  totalPrice: number | string
+  status: OrderStatus
+  createdAt: string | Date
+  updatedAt: string | Date
+}

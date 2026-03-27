@@ -4,6 +4,7 @@ import "./globals.css"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { I18nProvider } from "@/lib/i18n"
+import { AuthProvider } from "@/lib/auth-context"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -39,7 +40,9 @@ export const metadata: Metadata = {
     "pixel",
     "agent accounts",
   ],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  ),
   openGraph: {
     type: "website",
     siteName: "DigitalHub",
@@ -52,7 +55,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+                                     children,
+                                   }: {
+  children: React.ReactNode
+}) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -80,9 +87,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           className={`${dmSans.variable} ${dmSerif.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
       <I18nProvider>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {/* AuthProvider must wrap everything that needs auth state */}
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AuthProvider>
       </I18nProvider>
       </body>
       </html>
