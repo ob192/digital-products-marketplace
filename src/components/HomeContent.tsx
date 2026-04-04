@@ -4,14 +4,18 @@ import Link from "next/link"
 import { ArrowRight, Zap, Shield, Headphones } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CategoryCard } from "@/components/CategoryCard"
+import { ProductGrid } from "@/components/ProductGrid"
 import { useI18n } from "@/lib/i18n"
+import type { ProductWithCategory } from "@/types"
 
 const TELEGRAM_SUPPORT = "https://t.me/TTFarmFBfarm"
 
 export function HomeContent({
                               categories,
+                              products,
                             }: {
   categories: Parameters<typeof CategoryCard>[0]["category"][]
+  products: ProductWithCategory[]
 }) {
   const { t } = useI18n()
 
@@ -78,22 +82,20 @@ export function HomeContent({
           </div>
         </section>
 
-        {/* Categories */}
+        {/* All Products */}
         <section className="container mx-auto px-4 py-8 md:py-16">
           <div className="flex items-center justify-between mb-5 md:mb-8">
             <div>
-              <h2 className="text-lg md:text-2xl font-bold mb-0.5 md:mb-1">{t("categories.title")}</h2>
-              <p className="text-muted-foreground text-xs md:text-sm">{t("categories.subtitle")}</p>
+              <h2 className="text-lg md:text-2xl font-bold mb-0.5 md:mb-1">{t("products.title")}</h2>
+              <p className="text-muted-foreground text-xs md:text-sm">
+                {products.length} {t("products.available")}
+              </p>
             </div>
             <Button variant="outline" size="sm" asChild>
               <Link href="/products">{t("categories.viewAll")}</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-            {categories.map((cat) => (
-                <CategoryCard key={cat.id} category={cat} />
-            ))}
-          </div>
+          <ProductGrid products={products} />
         </section>
 
         {/* CTA */}
